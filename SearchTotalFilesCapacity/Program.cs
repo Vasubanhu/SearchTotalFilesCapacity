@@ -1,7 +1,5 @@
-﻿using static SearchTotalFilesCapacity.DataRepresentation;
+﻿SearchTotalFilesCapacity.Handler handler = new();
 
-var path = @"D:\Projects\ТЗ";//Directory.GetCurrentDirectory();
-
-PrintDirectoryTree(path);
+handler.Initialize(args);
 
 Console.ReadKey();

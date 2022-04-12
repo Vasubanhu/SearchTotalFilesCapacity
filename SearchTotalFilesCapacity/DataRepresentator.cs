@@ -1,11 +1,11 @@
 ﻿namespace SearchTotalFilesCapacity
 {
-    internal class DataRepresentation
+    internal class DataRepresentator
     {
         private const int RootLevel = 0;
         private const string Indent = "--";
 
-        internal static void PrintDirectoryTree(string rootDirectoryPath)
+        internal static void PrintDirectoryTree(string? rootDirectoryPath)
         {
             try
             {
@@ -34,8 +34,8 @@
 
             Console.WriteLine(@$"{indent}- {directory.Name} ({directory.GetDirectories("*.*", SearchOption.AllDirectories)
                                                                        .Select(d => d.GetFiles()
-                                                                                                 .Select(f => f.Length)
-                                                                                                 .Sum())
+                                                                       .Select(f => f.Length)
+                                                                       .Sum())
                                                                        .Sum()} bytes)");
             PrintFiles(pattern: indent, dir: directory);
 
