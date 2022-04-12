@@ -1,4 +1,4 @@
-﻿SearchTotalFilesCapacity.Handler handler = new();
+﻿SearchTotalFilesCapacity.MainHandler handler = new();
 
 handler.Initialize(args);
 

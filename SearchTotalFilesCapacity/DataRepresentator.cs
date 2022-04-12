@@ -32,11 +32,7 @@
                 indent += Indent;
             }
 
-            Console.WriteLine(@$"{indent}- {directory.Name} ({directory.GetDirectories("*.*", SearchOption.AllDirectories)
-                                                                       .Select(d => d.GetFiles()
-                                                                       .Select(f => f.Length)
-                                                                       .Sum())
-                                                                       .Sum()} bytes)");
+            Console.WriteLine(@$"{indent}- {directory.Name} ({CalculateTotalCapacity(directory)} bytes)");
             PrintFiles(pattern: indent, dir: directory);
 
             var nextLevel = currentLevel + 1;
@@ -74,5 +70,13 @@
                 Console.WriteLine($"{pattern}- {fi.Name} ({fi.Length} bytes)");
             }
         }
+
+        internal static long CalculateTotalCapacity(DirectoryInfo directory) => directory
+            .GetDirectories("*.*", SearchOption.AllDirectories)
+            .Select(d => d.GetFiles()
+                .Select(f => f.Length)
+                .Sum())
+            .Sum();
     }
+
 }
