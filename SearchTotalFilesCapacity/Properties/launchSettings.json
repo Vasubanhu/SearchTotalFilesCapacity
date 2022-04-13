@@ -2,7 +2,7 @@
   "profiles": {
     "SearchTotalFilesCapacity": {
       "commandName": "Project",
-      "commandLineArgs": "-p",
+      "commandLineArgs": "--output",
       "workingDirectory": "D:\\Projects\\ТЗ\\SearchTotalFilesCapacity\\SearchTotalFilesCapacity"
     }
   }

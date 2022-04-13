@@ -5,12 +5,13 @@ namespace SearchTotalFilesCapacity
 {
     internal class FilesHandler
     {
-        internal static void RedirectStream(string? path, string fileName, Method? method = null)
+        internal static void RedirectStream(string? fileName, Method? method = null, string? pathToSearch = null, string? pathToSave = null)
         {
-            var sw = new StreamWriter(fileName);
+            var fullPath = (pathToSave == null) ? fileName : @$"{pathToSave}\{fileName}";
+            var sw = new StreamWriter(fullPath);
             sw.AutoFlush = true;
             Console.SetOut(sw);
-            if (path != null) method?.Invoke(path);
+            if (pathToSearch != null) method?.Invoke(pathToSearch);
             CloseStream(sw);
         }
 

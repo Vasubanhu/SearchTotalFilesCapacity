@@ -5,9 +5,10 @@ namespace SearchTotalFilesCapacity
 {
     internal class MainHandler
     {
-        private readonly string? _defaultPath = Directory.GetCurrentDirectory();
+        private readonly string? _defaultSearchPath = Directory.GetCurrentDirectory();
         internal delegate void Method(string path);
-        private const string Message = @"Type the path to the directory to bypass in the format (e.g C:\path\to\your\folder)";
+        private const string Message1 = @"Type the path to the directory to bypass in the format (e.g C:\path\to\your\folder)";
+        private const string Message2 = @"Type the path to save to the result of calculate in the format (e.g C:\path\to\your\folder)";
 
         public void Initialize(string[]? args)
         {
@@ -22,19 +23,20 @@ namespace SearchTotalFilesCapacity
                     {
                         case "-q":
                         case "--quite":
-                            RedirectStream(_defaultPath, "Tree.txt", method1);
+                            RedirectStream("Tree.txt", method1, _defaultSearchPath);
                             Console.WriteLine("The structure of current directory was saved.");
                             return;
                         case "-p":
                         case "--path":
-                            var path = InputPath();
-                            RedirectStream(path, "Tree.txt", method1);
-                            Console.WriteLine($"The structure for directory {path} was saved.");
+                            var pathToSearch = InputPath(Message1);
+                            RedirectStream("Tree.txt", method1, pathToSearch);
+                            Console.WriteLine($"The structure for directory {pathToSearch} was saved.");
                             return;
                         case "-o":
                         case "--output":
-                            RedirectStream(_defaultPath, $"{DateTime.Now:yyyy-MM-dd}.txt", method2);
-                            Console.WriteLine("Outputting the total volume to a file.");
+                            var pathToSave = InputPath(Message2);
+                            RedirectStream($"sizes-{DateTime.Now:yyyy-MM-dd}.txt", method2, _defaultSearchPath, pathToSave);
+                            Console.WriteLine($"The total size of all files in a directory {_defaultSearchPath} was saved.");
                             return;
                         case "--h":
                         case "--humanread":
@@ -43,13 +45,13 @@ namespace SearchTotalFilesCapacity
                     }
                 }
             }
-            
-            PrintDirectoryTree(_defaultPath);
+
+            PrintDirectoryTree(_defaultSearchPath);
         }
 
-        private static string? InputPath()
+        private static string? InputPath(string message)
         {
-            Console.WriteLine(Message);
+            Console.WriteLine(message);
             var path = Console.ReadLine();
             return path;
         }
