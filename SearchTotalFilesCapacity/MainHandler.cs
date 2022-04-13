@@ -9,6 +9,7 @@ namespace SearchTotalFilesCapacity
         internal delegate void Method(string path);
         private const string Message1 = @"Type the path to the directory to bypass in the format (e.g C:\path\to\your\folder)";
         private const string Message2 = @"Type the path to save to the result of calculate in the format (e.g C:\path\to\your\folder)";
+        internal static bool IsConvert;
 
         public void Initialize(string[]? args)
         {
@@ -38,9 +39,11 @@ namespace SearchTotalFilesCapacity
                             RedirectStream($"sizes-{DateTime.Now:yyyy-MM-dd}.txt", method2, _defaultSearchPath, pathToSave);
                             Console.WriteLine($"The total size of all files in a directory {_defaultSearchPath} was saved.");
                             return;
-                        case "--h":
+                        case "-h":
                         case "--humanread":
-                            Console.WriteLine("Формирование размера файла.");
+                            IsConvert = true;
+                            PrintDirectoryTree(_defaultSearchPath);
+                            Console.WriteLine("Data size was converted.");
                             return;
                     }
                 }

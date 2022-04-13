@@ -1,4 +1,6 @@
-﻿namespace SearchTotalFilesCapacity
+﻿using static SearchTotalFilesCapacity.MainHandler;
+
+namespace SearchTotalFilesCapacity
 {
     internal class DataRepresentator
     {
@@ -32,7 +34,10 @@
                 indent += Indent;
             }
 
-            Console.WriteLine(@$"{indent}- {directory.Name} ({CalculateTotalCapacity(directory)} bytes)");
+            Console.WriteLine(IsConvert
+                ? @$"{indent}- {directory.Name} ({CalculateTotalCapacity(directory).ToString().BytesConvertTo()})"
+                : @$"{indent}- {directory.Name} ({CalculateTotalCapacity(directory)} bytes)");
+
             PrintFiles(pattern: indent, dir: directory);
 
             var nextLevel = currentLevel + 1;
@@ -67,7 +72,9 @@
 
             foreach (var fi in files)
             {
-                Console.WriteLine($"{pattern}-- {fi.Name} ({fi.Length} bytes)");
+                Console.WriteLine(IsConvert
+                    ? $"{pattern}-- {fi.Name} ({fi.Length.ToString().BytesConvertTo()})"
+                    : $"{pattern}-- {fi.Name} ({fi.Length} bytes)");
             }
         }
 

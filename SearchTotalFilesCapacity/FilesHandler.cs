@@ -7,8 +7,9 @@ namespace SearchTotalFilesCapacity
     {
         internal static void RedirectStream(string? fileName, Method? method = null, string? pathToSearch = null, string? pathToSave = null)
         {
-            var fullPath = (pathToSave == null) ? fileName : @$"{pathToSave}\{fileName}";
-            var sw = new StreamWriter(fullPath);
+            var path = (pathToSave == null) ? fileName : $"{pathToSave}\\{fileName}";
+            if (path == null) return;
+            var sw = new StreamWriter(path);
             sw.AutoFlush = true;
             Console.SetOut(sw);
             if (pathToSearch != null) method?.Invoke(pathToSearch);
