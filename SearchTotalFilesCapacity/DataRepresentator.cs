@@ -3,7 +3,7 @@
     internal class DataRepresentator
     {
         private const int RootLevel = 0;
-        private const string Indent = "--";
+        private const string Indent = "-";
 
         internal static void PrintDirectoryTree(string? rootDirectoryPath)
         {
@@ -67,15 +67,13 @@
 
             foreach (var fi in files)
             {
-                Console.WriteLine($"{pattern}- {fi.Name} ({fi.Length} bytes)");
+                Console.WriteLine($"{pattern}-- {fi.Name} ({fi.Length} bytes)");
             }
         }
 
         internal static long CalculateTotalCapacity(DirectoryInfo directory) => directory
-            .GetDirectories("*.*", SearchOption.AllDirectories)
-            .Select(d => d.GetFiles()
-                .Select(f => f.Length)
-                .Sum())
+            .GetFiles("*.*", SearchOption.AllDirectories)
+            .Select(f => f.Length)
             .Sum();
     }
 

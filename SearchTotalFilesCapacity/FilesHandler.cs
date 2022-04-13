@@ -1,15 +1,16 @@
 ﻿using static SearchTotalFilesCapacity.DataRepresentator;
+using static SearchTotalFilesCapacity.MainHandler;
 
 namespace SearchTotalFilesCapacity
 {
     internal class FilesHandler
     {
-        internal static void RedirectStream(string path)
+        internal static void RedirectStream(string? path, string fileName, Method? method = null)
         {
-            var sw = new StreamWriter(@".\Tree.txt");
+            var sw = new StreamWriter(fileName);
             sw.AutoFlush = true;
             Console.SetOut(sw);
-            PrintDirectoryTree(path);
+            if (path != null) method?.Invoke(path);
             CloseStream(sw);
         }
 
@@ -26,12 +27,7 @@ namespace SearchTotalFilesCapacity
         internal static void OutputData(string path)
         {
             var directory = new DirectoryInfo(path);
-            var output = @$"./ {DateTime.Now:yyyy-MM-dd}.txt";
-
-            using (var sw = new StreamWriter(output))
-            {
-                Console.WriteLine($"Total files capacity: {CalculateTotalCapacity(directory)}");
-            }
+            Console.WriteLine($"Total files capacity: {CalculateTotalCapacity(directory)} bytes.");
         }
     }
 }
